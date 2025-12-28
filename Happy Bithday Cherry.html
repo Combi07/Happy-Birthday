@@ -1,0 +1,860 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday</title>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #ffd1dc 0%, #ffb6c8 25%, #e6b8d7 75%, #d8b9f3 100%);
+      color: #5d4157;
+      position: relative;
+      width: 100%;
+      touch-action: manipulation;
+    }
+
+    .main-wrapper {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    /* Magical particles background */
+    .particle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0;
+    }
+
+    .heart-particle {
+      font-size: 18px;
+      animation: floatParticle 7s infinite ease-in;
+    }
+
+    .sparkle-particle {
+      font-size: 14px;
+      animation: floatParticle 6s infinite ease-in;
+    }
+
+    .particle:nth-child(1) { left: 5%; animation-delay: 0s; }
+    .particle:nth-child(2) { left: 15%; animation-delay: 1.5s; }
+    .particle:nth-child(3) { left: 25%; animation-delay: 3s; }
+    .particle:nth-child(4) { left: 35%; animation-delay: 0.5s; }
+    .particle:nth-child(5) { left: 45%; animation-delay: 2s; }
+    .particle:nth-child(6) { left: 55%; animation-delay: 4s; }
+    .particle:nth-child(7) { left: 65%; animation-delay: 1s; }
+    .particle:nth-child(8) { left: 75%; animation-delay: 3.5s; }
+    .particle:nth-child(9) { left: 85%; animation-delay: 2.5s; }
+    .particle:nth-child(10) { left: 95%; animation-delay: 0.8s; }
+
+    @keyframes floatParticle {
+      0% {
+        bottom: -10%;
+        opacity: 0;
+        transform: translateX(0) rotate(0deg) scale(0.8);
+      }
+      15% {
+        opacity: 0.7;
+      }
+      50% {
+        opacity: 1;
+      }
+      85% {
+        opacity: 0.5;
+      }
+      100% {
+        bottom: 110%;
+        opacity: 0;
+        transform: translateX(50px) rotate(360deg) scale(1.2);
+      }
+    }
+
+    /* Gift section */
+    .gift-section {
+      width: 100%;
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      position: relative;
+      z-index: 10;
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .gift-section.hidden {
+      opacity: 0;
+      transform: scale(0.8);
+      pointer-events: none;
+    }
+
+    .gift-container {
+      position: relative;
+      cursor: pointer;
+      animation: giftBounce 2s ease-in-out infinite;
+      transition: transform 0.3s ease;
+    }
+
+    .gift-container:active {
+      transform: scale(0.95);
+    }
+
+    @keyframes giftBounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    .gift-box {
+      width: 200px;
+      height: 200px;
+      background: linear-gradient(135deg, #ff6b9d 0%, #ff8fab 100%);
+      border-radius: 20px;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(255, 107, 157, 0.4);
+      animation: giftGlow 2s ease-in-out infinite;
+    }
+
+    @keyframes giftGlow {
+      0%, 100% {
+        box-shadow: 0 20px 60px rgba(255, 107, 157, 0.4);
+      }
+      50% {
+        box-shadow: 0 20px 80px rgba(255, 107, 157, 0.6), 0 0 40px rgba(255, 107, 157, 0.3);
+      }
+    }
+
+    /* Ribbon vertical */
+    .ribbon-vertical {
+      position: absolute;
+      width: 40px;
+      height: 100%;
+      background: linear-gradient(90deg, #ffd700 0%, #ffed4e 50%, #ffd700 100%);
+      left: 50%;
+      transform: translateX(-50%);
+      top: 0;
+      box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Ribbon horizontal */
+    .ribbon-horizontal {
+      position: absolute;
+      width: 100%;
+      height: 40px;
+      background: linear-gradient(180deg, #ffd700 0%, #ffed4e 50%, #ffd700 100%);
+      top: 50%;
+      transform: translateY(-50%);
+      left: 0;
+      box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Bow */
+    .bow {
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 60px;
+    }
+
+    .bow-left, .bow-right {
+      position: absolute;
+      width: 40px;
+      height: 50px;
+      background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+      border-radius: 50% 50% 0 50%;
+      box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+    }
+
+    .bow-left {
+      left: 0;
+      transform: rotate(-45deg);
+      animation: bowFloat 2s ease-in-out infinite;
+    }
+
+    .bow-right {
+      right: 0;
+      transform: rotate(45deg) scaleX(-1);
+      animation: bowFloat 2s ease-in-out infinite 0.3s;
+    }
+
+    @keyframes bowFloat {
+      0%, 100% {
+        transform: rotate(-45deg) translateY(0);
+      }
+      50% {
+        transform: rotate(-45deg) translateY(-5px);
+      }
+    }
+
+    .bow-center {
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+      border-radius: 50%;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 3px 10px rgba(255, 215, 0, 0.5);
+    }
+
+    /* Gift shine effect */
+    .gift-shine {
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      animation: shine 3s ease-in-out infinite;
+    }
+
+    @keyframes shine {
+      0% {
+        left: -100%;
+      }
+      50%, 100% {
+        left: 200%;
+      }
+    }
+
+    /* Tap instruction */
+    .tap-instruction {
+      margin-top: 50px;
+      font-size: 22px;
+      color: #fff;
+      text-align: center;
+      animation: tapPulse 1.5s ease-in-out infinite;
+      text-shadow: 0 2px 10px rgba(255, 107, 157, 0.5);
+      font-weight: 600;
+    }
+
+    @keyframes tapPulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+      }
+    }
+
+    /* Sparkles around gift */
+    .gift-sparkle {
+      position: absolute;
+      font-size: 20px;
+      animation: sparkleRotate 3s ease-in-out infinite;
+    }
+
+    .gift-sparkle:nth-child(1) {
+      top: -20px;
+      left: -20px;
+      animation-delay: 0s;
+    }
+
+    .gift-sparkle:nth-child(2) {
+      top: -20px;
+      right: -20px;
+      animation-delay: 0.5s;
+    }
+
+    .gift-sparkle:nth-child(3) {
+      bottom: -20px;
+      left: -20px;
+      animation-delay: 1s;
+    }
+
+    .gift-sparkle:nth-child(4) {
+      bottom: -20px;
+      right: -20px;
+      animation-delay: 1.5s;
+    }
+
+    @keyframes sparkleRotate {
+      0%, 100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 0.6;
+      }
+      50% {
+        transform: scale(1.3) rotate(180deg);
+        opacity: 1;
+      }
+    }
+
+    /* Message section */
+    .message-section {
+      width: 100%;
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transform: scale(0.5) rotateY(90deg);
+      pointer-events: none;
+      transition: opacity 1s ease-out 0.5s, transform 1s ease-out 0.5s;
+      z-index: 20;
+    }
+
+    .message-section.visible {
+      opacity: 1;
+      transform: scale(1) rotateY(0deg);
+      pointer-events: auto;
+    }
+
+    /* Celebration burst */
+    .celebration-burst {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 100;
+      opacity: 0;
+    }
+
+    .celebration-burst.active {
+      animation: burstFade 1.5s ease-out;
+    }
+
+    @keyframes burstFade {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0);
+      }
+      50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.5);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(2);
+      }
+    }
+
+    .burst-heart {
+      position: absolute;
+      font-size: 30px;
+      animation: burstOut 1s ease-out;
+    }
+
+    .burst-heart:nth-child(1) { animation-delay: 0s; }
+    .burst-heart:nth-child(2) { animation-delay: 0.1s; }
+    .burst-heart:nth-child(3) { animation-delay: 0.2s; }
+    .burst-heart:nth-child(4) { animation-delay: 0.3s; }
+    .burst-heart:nth-child(5) { animation-delay: 0.4s; }
+    .burst-heart:nth-child(6) { animation-delay: 0.5s; }
+    .burst-heart:nth-child(7) { animation-delay: 0.6s; }
+    .burst-heart:nth-child(8) { animation-delay: 0.7s; }
+
+    @keyframes burstOut {
+      0% {
+        transform: translate(0, 0) scale(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--tx), var(--ty)) scale(1) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Message card */
+    .message-card {
+      background: rgba(255, 255, 255, 0.98);
+      border-radius: 30px;
+      padding: 50px 35px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 30px 80px rgba(219, 112, 147, 0.3);
+      position: relative;
+      animation: cardFloat 3s ease-in-out infinite;
+      border: 2px solid rgba(255, 182, 193, 0.4);
+    }
+
+    @keyframes cardFloat {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    /* Decorative corners */
+    .corner-decoration {
+      position: absolute;
+      font-size: 30px;
+      animation: cornerSpin 4s ease-in-out infinite;
+    }
+
+    .corner-decoration.top-left {
+      top: 15px;
+      left: 15px;
+    }
+
+    .corner-decoration.top-right {
+      top: 15px;
+      right: 15px;
+      animation-delay: 1s;
+    }
+
+    .corner-decoration.bottom-left {
+      bottom: 15px;
+      left: 15px;
+      animation-delay: 2s;
+    }
+
+    .corner-decoration.bottom-right {
+      bottom: 15px;
+      right: 15px;
+      animation-delay: 3s;
+    }
+
+    @keyframes cornerSpin {
+      0%, 100% {
+        transform: rotate(0deg) scale(1);
+        opacity: 0.7;
+      }
+      50% {
+        transform: rotate(180deg) scale(1.2);
+        opacity: 1;
+      }
+    }
+
+    /* Title */
+    .message-title {
+      font-size: 38px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #ff1744 0%, #ff6b9d 50%, #c44569 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: titleGlow 3s ease-in-out infinite;
+      line-height: 1.3;
+      letter-spacing: 0.5px;
+    }
+
+    @keyframes titleGlow {
+      0%, 100% {
+        filter: drop-shadow(0 0 10px rgba(255, 23, 68, 0.4));
+      }
+      50% {
+        filter: drop-shadow(0 0 20px rgba(255, 23, 68, 0.7));
+      }
+    }
+
+    /* Divider */
+    .message-divider {
+      width: 100px;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, #ff6b9d, #ffd700, #ff6b9d, transparent);
+      margin: 25px auto;
+      border-radius: 2px;
+      animation: dividerShine 2s ease-in-out infinite;
+    }
+
+    @keyframes dividerShine {
+      0%, 100% {
+        opacity: 0.7;
+        transform: scaleX(1);
+      }
+      50% {
+        opacity: 1;
+        transform: scaleX(1.1);
+      }
+    }
+
+    /* Message body */
+    .message-body {
+      font-size: 18px;
+      line-height: 1.9;
+      text-align: center;
+      color: #6b5b73;
+      margin-top: 30px;
+      animation: textFadeIn 2s ease-out 1s both;
+    }
+
+    @keyframes textFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Bottom hearts */
+    .message-hearts {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 32px;
+      animation: heartsBeat 1.5s ease-in-out infinite;
+    }
+
+    @keyframes heartsBeat {
+      0%, 100% {
+        transform: scale(1);
+      }
+      25% {
+        transform: scale(1.15);
+      }
+      50% {
+        transform: scale(1);
+      }
+      75% {
+        transform: scale(1.1);
+      }
+    }
+
+    /* Floating flowers */
+    .flower-decoration {
+      position: fixed;
+      font-size: 35px;
+      opacity: 0.5;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .flower-1 {
+      top: 12%;
+      left: 5%;
+      animation: flowerRotate 25s linear infinite;
+    }
+
+    .flower-2 {
+      top: 20%;
+      right: 8%;
+      animation: flowerRotate 20s linear infinite reverse;
+    }
+
+    .flower-3 {
+      bottom: 15%;
+      left: 8%;
+      animation: flowerRotate 22s linear infinite;
+    }
+
+    .flower-4 {
+      bottom: 20%;
+      right: 5%;
+      animation: flowerRotate 28s linear infinite reverse;
+    }
+
+    @keyframes flowerRotate {
+      from {
+        transform: rotate(0deg) scale(1);
+      }
+      50% {
+        transform: rotate(180deg) scale(1.2);
+      }
+      to {
+        transform: rotate(360deg) scale(1);
+      }
+    }
+
+    /* Responsive design */
+    @media (max-width: 400px) {
+      .gift-box {
+        width: 160px;
+        height: 160px;
+      }
+
+      .message-card {
+        padding: 40px 28px;
+      }
+
+      .message-title {
+        font-size: 32px;
+      }
+
+      .message-body {
+        font-size: 16px;
+      }
+
+      .tap-instruction {
+        font-size: 20px;
+      }
+    }
+  </style>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="main-wrapper"><!-- Background particles -->
+   <div class="particle heart-particle">
+    💕
+   </div>
+   <div class="particle sparkle-particle">
+    ✨
+   </div>
+   <div class="particle heart-particle">
+    💖
+   </div>
+   <div class="particle sparkle-particle">
+    ⭐
+   </div>
+   <div class="particle heart-particle">
+    💗
+   </div>
+   <div class="particle sparkle-particle">
+    ✨
+   </div>
+   <div class="particle heart-particle">
+    ❤️
+   </div>
+   <div class="particle sparkle-particle">
+    ⭐
+   </div>
+   <div class="particle heart-particle">
+    💕
+   </div>
+   <div class="particle sparkle-particle">
+    ✨
+   </div><!-- Flower decorations -->
+   <div class="flower-decoration flower-1">
+    🌸
+   </div>
+   <div class="flower-decoration flower-2">
+    🌺
+   </div>
+   <div class="flower-decoration flower-3">
+    🌷
+   </div>
+   <div class="flower-decoration flower-4">
+    🌹
+   </div><!-- Gift Section -->
+   <section class="gift-section" id="giftSection">
+    <div class="gift-container" id="giftContainer">
+     <div class="gift-box">
+      <div class="ribbon-vertical"></div>
+      <div class="ribbon-horizontal"></div>
+      <div class="gift-shine"></div>
+     </div>
+     <div class="bow">
+      <div class="bow-left"></div>
+      <div class="bow-right"></div>
+      <div class="bow-center"></div>
+     </div>
+     <div class="gift-sparkle">
+      ✨
+     </div>
+     <div class="gift-sparkle">
+      ⭐
+     </div>
+     <div class="gift-sparkle">
+      ✨
+     </div>
+     <div class="gift-sparkle">
+      ⭐
+     </div>
+    </div>
+    <div class="tap-instruction" id="tapInstruction">
+     Tap the gift 🎁
+    </div>
+   </section><!-- Celebration burst -->
+   <div class="celebration-burst" id="celebrationBurst">
+    <div class="burst-heart" style="--tx: 0px; --ty: -150px;">
+     💖
+    </div>
+    <div class="burst-heart" style="--tx: 106px; --ty: -106px;">
+     💕
+    </div>
+    <div class="burst-heart" style="--tx: 150px; --ty: 0px;">
+     💗
+    </div>
+    <div class="burst-heart" style="--tx: 106px; --ty: 106px;">
+     ❤️
+    </div>
+    <div class="burst-heart" style="--tx: 0px; --ty: 150px;">
+     💖
+    </div>
+    <div class="burst-heart" style="--tx: -106px; --ty: 106px;">
+     💕
+    </div>
+    <div class="burst-heart" style="--tx: -150px; --ty: 0px;">
+     💗
+    </div>
+    <div class="burst-heart" style="--tx: -106px; --ty: -106px;">
+     ❤️
+    </div>
+   </div><!-- Message Section -->
+   <section class="message-section" id="messageSection">
+    <div class="message-card">
+     <div class="corner-decoration top-left">
+      🌟
+     </div>
+     <div class="corner-decoration top-right">
+      🌟
+     </div>
+     <div class="corner-decoration bottom-left">
+      🌟
+     </div>
+     <div class="corner-decoration bottom-right">
+      🌟
+     </div>
+     <h1 class="message-title" id="messageTitle">Happy Birthday, Cherry ❤️</h1>
+     <div class="message-divider"></div>
+     <div class="message-body" id="messageBody">
+      I just want you to know how deeply I love you. Thank you for being such a beautiful part of my life, even though lagi tayong nag aaway. I wish that you are always healthy, happy, and successful in everything you do. May all your dreams come true, and may life always be kind to you. I will always be here, cheering for you and loving you.
+     </div>
+     <div class="message-hearts">
+      💝 🌹 💝
+     </div>
+    </div>
+   </section>
+  </div>
+  <script>
+    const defaultConfig = {
+      title_text: "Happy Birthday, Cherry ❤️",
+      message_body: "I just want you to know how deeply I love you. Thank you for being such a beautiful part of my life, even though lagi tayong nag aaway. I wish that you are always healthy, happy, and successful in everything you do. May all your dreams come true, and may life always be kind to you. I will always be here, cheering for you and loving you.",
+      tap_instruction: "Tap the gift 🎁",
+      background_color: "#ffd1dc",
+      gift_color: "#ff6b9d",
+      text_color: "#6b5b73"
+    };
+
+    let isOpened = false;
+
+    async function onConfigChange(config) {
+      const titleElement = document.getElementById('messageTitle');
+      const bodyElement = document.getElementById('messageBody');
+      const tapElement = document.getElementById('tapInstruction');
+
+      if (titleElement) {
+        titleElement.textContent = config.title_text || defaultConfig.title_text;
+      }
+
+      if (bodyElement) {
+        bodyElement.textContent = config.message_body || defaultConfig.message_body;
+      }
+
+      if (tapElement) {
+        tapElement.textContent = config.tap_instruction || defaultConfig.tap_instruction;
+      }
+
+      const bgColor = config.background_color || defaultConfig.background_color;
+      document.body.style.background = `linear-gradient(135deg, ${bgColor} 0%, #ffb6c8 25%, #e6b8d7 75%, #d8b9f3 100%)`;
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => {
+              config.background_color = value;
+              if (window.elementSdk) {
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            }
+          },
+          {
+            get: () => config.gift_color || defaultConfig.gift_color,
+            set: (value) => {
+              config.gift_color = value;
+              if (window.elementSdk) {
+                window.elementSdk.setConfig({ gift_color: value });
+              }
+            }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => {
+              config.text_color = value;
+              if (window.elementSdk) {
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ["title_text", config.title_text || defaultConfig.title_text],
+        ["message_body", config.message_body || defaultConfig.message_body],
+        ["tap_instruction", config.tap_instruction || defaultConfig.tap_instruction]
+      ]);
+    }
+
+    function openGift() {
+      if (isOpened) return;
+      isOpened = true;
+
+      const giftSection = document.getElementById('giftSection');
+      const messageSection = document.getElementById('messageSection');
+      const celebrationBurst = document.getElementById('celebrationBurst');
+
+      // Trigger celebration burst
+      celebrationBurst.classList.add('active');
+
+      // Hide gift, show message
+      setTimeout(() => {
+        giftSection.classList.add('hidden');
+        messageSection.classList.add('visible');
+      }, 300);
+
+      // Reset burst animation
+      setTimeout(() => {
+        celebrationBurst.classList.remove('active');
+      }, 1500);
+    }
+
+    // Event listeners
+    document.getElementById('giftContainer').addEventListener('click', openGift);
+    document.getElementById('giftContainer').addEventListener('touchend', (e) => {
+      e.preventDefault();
+      openGift();
+    });
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9b529560808984f9',t:'MTc2Njk0MDkwNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
